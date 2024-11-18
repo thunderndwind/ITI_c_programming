@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1731902469 source:e:\iti\c\lab_2\tilhundred.c
+	<stdio.h>
+
+1731919512 source:e:\iti\c\lab_2\main.c
+	<stdio.h>
+	<stdlib.h>
+	"magicBox.h"
+	"tilHundred.h"
+	"simpleMinue.h"
+	"multipicationTable.h"
+
+1731834077 e:\iti\c\lab_2\tilhundred.h
+
+1731919719 source:e:\iti\c\lab_2\magicbox.c
+	<stdio.h>
+	<windows.h>
+
+1731841807 e:\iti\c\lab_2\magicbox.h
+
+1731913520 source:e:\iti\c\lab_2\simpleminue.c
+	<stdio.h>
+
+1731903324 e:\iti\c\lab_2\simpleminue.h
+
+1731911302 e:\iti\c\lab_2\multipicationtable.h
+
+1731913502 source:e:\iti\c\lab_2\multiplicationtable.c
+	<stdio.h>
+
