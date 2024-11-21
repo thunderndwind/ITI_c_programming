@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1732224457 source:e:\iti\c\lab_5\emplyees_menu\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	<conio.h>
+	"validations.h"
+
+1732224324 e:\iti\c\lab_5\emplyees_menu\validations.h
+
+1732224338 source:e:\iti\c\lab_5\emplyees_menu\validations.c
+	"validations.h"
+	<stdio.h>
+	<string.h>
+

@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1732226166 source:e:\iti\c\lab_5\main.c
+	<stdio.h>
+	<stdlib.h>
+	"myString.h"
+
+1732163029 e:\iti\c\include\mystring.h
+
+1732218330 e:\iti\c\lab_5\mystring.h
+
+1732226201 source:e:\iti\c\lab_5\mystring.c
+	"myString.h"
+
