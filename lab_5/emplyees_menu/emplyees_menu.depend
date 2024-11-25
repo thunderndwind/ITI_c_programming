@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1732224457 source:e:\iti\c\lab_5\emplyees_menu\main.c
+1732365199 source:e:\iti\c\lab_5\emplyees_menu\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -7,9 +7,9 @@
 	<conio.h>
 	"validations.h"
 
-1732224324 e:\iti\c\lab_5\emplyees_menu\validations.h
+1732349027 e:\iti\c\lab_5\emplyees_menu\validations.h
 
-1732224338 source:e:\iti\c\lab_5\emplyees_menu\validations.c
+1732349164 source:e:\iti\c\lab_5\emplyees_menu\validations.c
 	"validations.h"
 	<stdio.h>
 	<string.h>

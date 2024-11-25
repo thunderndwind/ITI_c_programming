@@ -39,7 +39,7 @@ void gotoxy(int x, int y);
 void printMenu(int selectedOption);
 void addEmployees(Employee employees[], int *count);
 void displayEmployees(Employee employees[], int count);
-void modifyEmployee(Employee employees[], int count);
+void modifyEmployee(Employee employees[], int *count);
 void deleteEmployee(Employee employees[], int *count);
 int getConsoleWidth();
 int getConsoleHeight();
@@ -83,7 +83,7 @@ int main() {
                     displayEmployees(employees, employeesCounter);
                     break;
                 case 2:
-                    modifyEmployee(employees, employeesCounter);
+                    modifyEmployee(employees, &employeesCounter);
                     break;
                 case 3:
                     deleteEmployee(employees, &employeesCounter);
@@ -157,7 +157,11 @@ void addEmployees(Employee employees[], int *count) {
     }
 
     int numToAdd;
+    printf("Enter ESC to return to main menu\n");
     printf("Enter the number of employees to add (max %d): ", freeSpace);
+    if (getch() == EXIT){
+        return;
+    }
     fflush(stdin);
     numToAdd=validateNumber(1);
 
@@ -196,42 +200,73 @@ void addEmployees(Employee employees[], int *count) {
 
         employees[*count] = newEmployee;
         (*count)++;
-
         printf("Employee added successfully.\n");
+        if (i != numToAdd - 1){
         printf("Press any key to continue or ESC to return to menu.\n");
         if (getch() == EXIT) i = numToAdd;
+        }
     }
+        printf("Press any key to continue to menu.\n");
+        getch();
 }
 
 void displayEmployees(Employee employees[], int count) {
+    int consoleWidth = getConsoleWidth();
+    int consoleHeight = getConsoleHeight();
+    int centerX = (consoleWidth - 12) / 2;
+    int startY = (consoleHeight - 5 * 3) / 2;
+    int key;
+    if (count == 0) {
+        printf("No employees to modify.\n");
+        printf("Press ESC or Continue to go to main menu");
+
+        while(1){
+            key = getch();
+            if(key == EXIT || key == CHOOSE){
+                return;
+            }
+        }
+    }
+
     int flag = 1;
     clearConsole();
-    printf("Employee List:\n");
+    if (employees[0].code!=0){
+        printf("Employee List:\n");
+    }
     for (int i = 0; i < count; i++) {
+       // gotoxy(centerX, startY + i + i);
         printf("Code: %u, Name: %s, Net Salary: %u\n", employees[i].code, employees[i].name, employees[i].netSalary);
     }
+
     printf("\nPress ESC to return to menu.\n");
     while (flag) {
         int key = getch();
-        if (key == 27) {
+        if (key == EXIT) {
             flag = 0;
         }
     }
 }
 
-void modifyEmployee(Employee employees[], int count) {
-    if (count == 0) {
+void modifyEmployee(Employee employees[], int *count) {
+    int key;
+
+    if (*count == 0) {
         printf("No employees to modify.\n");
-        getch();
-        return;
+        printf("Press ESC or Continue to go to main menu");
+
+        while(1){
+            key = getch();
+            if(key == EXIT || key == CHOOSE){
+                return;
+            }
+        }
     }
 
     int selected = 0;
-    int key;
     int flag = 1;
     while (flag) {
         clearConsole();
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < *count; i++) {
             if (i == selected) {
                 setColor(BLUE);
             } else {
@@ -244,23 +279,24 @@ void modifyEmployee(Employee employees[], int count) {
         key = getch();
         if (key == EXTENDED) {
             key = getch();
-            if (key == UP) selected = (selected - 1 + count) % count;
-            if (key == DOWN) selected = (selected + 1) % count;
+            if (key == UP) selected = (selected - 1 + *count) % *count;
+            if (key == DOWN) selected = (selected + 1) % *count;
+        } else if (key == EXIT) {
+            flag = 0;
         } else if (key == CHOOSE) {
-            printf("Modify employee name (y/n)? ");
-            char choice = getch();
+            printf("Modify employee name (y/n)? \n");
+            char choice = validateChoice();
             if (choice == 'y' || choice == 'Y') {
                 printf("\nEnter new name: ");
                 fflush(stdin);
-                fgets(employees[selected].name, MAX_NAME_SIZE, stdin);
-                employees[selected].name[strcspn(employees[selected].name, "\n")] = '\0';
+                validateName(employees[selected].name, MAX_NAME_SIZE);
             }
 
-            printf("Modify employee salary (y/n)? ");
-            choice = getch();
+            printf("Modify employee salary (y/n)? \n");
+            choice = validateChoice();
             if (choice == 'y' || choice == 'Y') {
                 printf("\nEnter new salary: ");
-                scanf("%u", &employees[selected].netSalary);
+                employees[selected].netSalary = validateNumber(1);
             }
             flag = 0;
         }
@@ -268,15 +304,22 @@ void modifyEmployee(Employee employees[], int count) {
 }
 
 void deleteEmployee(Employee employees[], int *count) {
+    int key;
+
     if (*count == 0) {
         printf("No employees to delete.\n");
-        getch();
-        return;
+        printf("Press ESC or Continue to go to main menu");
+
+        while(1){
+            key = getch();
+            if(key == EXIT || key == CHOOSE){
+                return;
+            }
+        }
     }
 
-    int selected = 0;
-    int key;
     int flag= 1;
+    int selected = 0;
     while (flag) {
         clearConsole();
         for (int i = 0; i < *count; i++) {
@@ -294,9 +337,11 @@ void deleteEmployee(Employee employees[], int *count) {
             key = getch();
             if (key == UP) selected = (selected - 1 + *count) % *count;
             if (key == DOWN) selected = (selected + 1) % *count;
-        } else if (key == CHOOSE) {
+        } else if (key == EXIT) {
+            flag = 0;
+        }else if (key == CHOOSE) {
             printf("Delete employee (y/n)? ");
-            char choice = getch();
+            char choice = validateChoice();
             if (choice == 'y' || choice == 'Y') {
                 for (int i = selected; i < *count - 1; i++) {
                     employees[i] = employees[i + 1];

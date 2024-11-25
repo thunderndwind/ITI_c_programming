@@ -102,3 +102,19 @@ void validateName(char output[], unsigned int maxSize) {
     }
 }
 
+char validateChoice() {
+    char input;
+    char isInputValid = FALSE;
+
+    while (isInputValid == FALSE) {
+        input = getch();
+
+        if (input == 'y' || input == 'Y' || input == 'n' || input == 'N') {
+            isInputValid = TRUE;
+        } else {
+            printf("\nInvalid choice. Enter 'y' or 'n': ");
+        }
+    }
+
+    return input;
+}
